@@ -38,7 +38,6 @@ public class TabelModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int arg0, int arg1) {
 		Boot boot = this.boot.get(arg0);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 		switch (arg1) {
 		case 0:
 			return boot.getID();

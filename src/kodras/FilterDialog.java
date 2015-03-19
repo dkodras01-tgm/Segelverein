@@ -4,16 +4,22 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JOptionPane;
 import javax.swing.SpringLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+
+import model.Boot;
 
 public class FilterDialog extends JDialog {
 
@@ -32,23 +38,23 @@ public class FilterDialog extends JDialog {
 	private JComboBox<String> comboBox_2;
 	private JComboBox<String> comboBox_3;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			FilterDialog dialog = new FilterDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		try {
+//			FilterDialog dialog = new FilterDialog();
+//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+//			dialog.setVisible(true);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	/**
 	 * Create the dialog.
 	 */
-	public FilterDialog() {
+	public FilterDialog(final DatabaseList<Boot> dbl) {
 		setVisible(true);
 		setBounds(100, 100, 792, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -169,7 +175,20 @@ public class FilterDialog extends JDialog {
 					
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
+						Boot boot = new Boot();
 						
+						//dbl.
+						
+//						try {
+//							Statement statement = Connect.conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+//							ResultSet rs = statement.executeQuery(getValue());
+//							rs.first();
+//							rs.close();
+//							//reloadData();
+//						} catch (SQLException e) {
+//							//e.printStackTrace();
+//							JOptionPane.showMessageDialog(null, "Ein Fehler ist bei der Verbindung zur Datenbank aufgetreten.");
+//						}
 						dispose();
 					}
 				});

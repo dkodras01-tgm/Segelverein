@@ -111,3 +111,5 @@ CREATE TABLE erzielt
   FOREIGN KEY (mname) REFERENCES Mannschaft ("name"),
   FOREIGN KEY (wname, wjahr, wdatum) REFERENCES Wettfahrt (wettfahrtname, wettfahrtjahr, datum)
 );
+
+CREATE OR REPLACE VIEW v_b AS SELECT max(boot.id) + 1 AS p FROM boot;

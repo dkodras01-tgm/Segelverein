@@ -16,6 +16,8 @@ import javax.swing.JPasswordField;
 
 public class DatabaseDialog extends JDialog {
 
+	private static final long serialVersionUID = 5975029054977319574L;
+	
 	private final JPanel contentPanel = new JPanel();
 	private JLabel lblHost;
 	private JLabel lblDatenbank;

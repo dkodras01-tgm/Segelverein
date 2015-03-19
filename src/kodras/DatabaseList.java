@@ -28,7 +28,7 @@ public class DatabaseList<T extends Updateable> extends ArrayList<T>{
 		try {
 			arg1.insert();
 		} catch (SQLException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 		super.add(arg0, arg1);
 	}

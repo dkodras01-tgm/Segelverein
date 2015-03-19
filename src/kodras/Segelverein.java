@@ -3,8 +3,6 @@ package kodras;
 
 import java.awt.EventQueue;
 
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
@@ -12,7 +10,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.JTable;
-import javax.swing.table.TableColumn;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -98,12 +95,57 @@ public class Segelverein extends JFrame implements ActionListener {
 		JMenuItem mntmFilter = new JMenuItem("Filter");
 		mntmFilter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				FilterDialog fd = new FilterDialog();
-				
-				System.out.println(fd.getValue());
+				if(connect==null) {
+					JOptionPane.showMessageDialog(null, "Bitte zu erst Verbindung zur Datenbank herstellen.");
+					return;
+				} else {
+					new FilterDialog(boot);
+				}
 			}
 		});
 		mnDatei.add(mntmFilter);
+		
+		JMenuItem mntmBootHinzufuegen = new JMenuItem("Boot hinzufuegen");
+		mnDatei.add(mntmBootHinzufuegen);
+		mntmBootHinzufuegen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(connect==null) {
+					JOptionPane.showMessageDialog(null, "Bitte zu erst Verbindung zur Datenbank herstellen.");
+					return;
+				} else {
+					new HinzufuegeDialog(boot);
+				}
+			}
+		});
+		
+		JMenuItem mntmBootLoeschen = new JMenuItem("Boot loeschen");
+		mnDatei.add(mntmBootLoeschen);
+		mntmBootLoeschen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(connect==null) {
+					JOptionPane.showMessageDialog(null, "Bitte zu erst Verbindung zur Datenbank herstellen.");
+					return;
+				} else {
+					int id = Integer.parseInt(JOptionPane.showInputDialog("Bitte geben sie die ID des Bootes ein, welches geloescht werden soll."));
+					if(id<0 || id>boot.size()) {
+						try {
+							Iterator<Boot> i = boot.iterator();
+							while(i.hasNext()) {
+								Boot s = i.next();
+								if(s.getID()==id) {
+									i.remove();
+								}
+							}
+							table.revalidate();
+						} catch (NumberFormatException e) {
+							JOptionPane.showMessageDialog(null,"Falsche Eingabe! Bitte geben Sie eine ganze Zahl an.");
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Die ID " + id + " existiert nicht!");
+					}
+				}
+			}
+		});
 		
 		JMenuItem mntmBeenden = new JMenuItem("Beenden");
 		mnDatei.add(mntmBeenden);
@@ -138,7 +180,6 @@ public class Segelverein extends JFrame implements ActionListener {
 	}
 	
 	public void changeFilter(int column) {
-		System.out.println(column);
 		this.boot = new DatabaseList<>();
 		String spaltenNameAlt = spaltenName;
 		switch(column) {
@@ -194,10 +235,6 @@ public class Segelverein extends JFrame implements ActionListener {
 			return;
 		} else {
 			this.boot = new DatabaseList<>();
-//			this.mannschaft = new DatabaseList<>();
-//			this.einsaetze = new DatabaseList<>();
-//			this.spiel = new DatabaseList<>();
-//			this.spielen = new DatabaseList<>();
 			try {
 				Statement statement = Connect.conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				ResultSet rs = statement.executeQuery("SELECT * FROM boot ORDER BY id ASC");
@@ -208,46 +245,8 @@ public class Segelverein extends JFrame implements ActionListener {
 				}
 				while(rs.next()==true);
 				rs.close();
-//				rs=statement.executeQuery("SELECT * FROM mannschaft;");
-//				rs.first();
-//				do {
-//					Mannschaft mannschaft = new Mannschaft(rs);
-//					this.mannschaft.add(mannschaft);
-//				}
-//				while(rs.next()==true);
-//				rs.close();
-//				rs=statement.executeQuery("SELECT * FROM spielen;");
-//				rs.first();
-//				do {
-//					Spielen spielen = new Spielen(rs);
-//					this.spielen.add(spielen);
-//				}
-//				while(rs.next()==true);
-//				rs.close();
-//				rs=statement.executeQuery("SELECT * FROM spiel;");
-//				rs.first();
-//				do {
-//					Spiel spiel = new Spiel(rs);
-//					this.spiel.add(spiel);
-//				}
-//				while(rs.next()==true);
-//				rs.close();
-//				rs=statement.executeQuery("SELECT * FROM einsatz;");
-//				rs.first();
-//				do {
-//					Einsatz einsatz = new Einsatz(rs);
-//					this.einsaetze.add(einsatz);
-//				}
-//				while(rs.next()==true);
-//				rs.close();
-//				
-//				statement.close();
+				
 				table.setModel(new TabelModel(boot));
-//				TableColumn geschl_column = table.getColumnModel().getColumn(3);
-//				JComboBox<String> cb = new JComboBox<>();
-//				cb.addItem("Maennlich");
-//				cb.addItem("Weiblich");
-//				geschl_column.setCellEditor(new DefaultCellEditor(cb));
 			} catch (SQLException e) {
 				JOptionPane.showMessageDialog(null, "Fehler bei der SQL-Abfrage.");
 				e.printStackTrace();

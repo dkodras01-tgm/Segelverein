@@ -59,7 +59,7 @@ public class Connect {
     }
     
     /**
-     * @return int, Gibt die naechst moegliche Personennummer zurueck
+     * @return int, Gibt die naechst moegliche Bootsnummer zurueck
      */
     public static int getNextID() {
     	if(conn==null) {
@@ -67,9 +67,9 @@ public class Connect {
     	} else {
     		try {
 				Statement s = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-				ResultSet res = s.executeQuery("SELECT * FROM v_n;");
+				ResultSet res = s.executeQuery("SELECT * FROM v_b;");
 				res.first();
-				return res.getInt("n");
+				return res.getInt("b");
 			} catch (SQLException e) {
 				e.printStackTrace();
 				return -1;
