@@ -5,10 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -31,9 +27,7 @@ public class HinzufuegeDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public HinzufuegeDialog(final DatabaseList<Boot> dbl) {
-//		setModalityType(ModalityType.APPLICATION_MODAL);
 		setVisible(true);
-//		setAlwaysOnTop(true);
 		setResizable(false);
 		setTitle("Boot hinzufuegen");
 		setBounds(100, 100, 387, 208);

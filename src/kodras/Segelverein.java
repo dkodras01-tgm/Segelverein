@@ -21,7 +21,6 @@ import java.util.Iterator;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-
 import model.Boot;
 
 
@@ -35,6 +34,7 @@ public class Segelverein extends JFrame implements ActionListener {
 	private JTable table;
 	private String spaltenName="";
 	private boolean aufsteigend=true;
+	private String whereSELECT = "";
 	
 	/**
 	 * Launch the application.
@@ -87,6 +87,7 @@ public class Segelverein extends JFrame implements ActionListener {
 		JMenuItem mntmAktualisieren = new JMenuItem("Aktualisieren");
 		mntmAktualisieren.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				whereSELECT = "";
 				reloadData();
 			}
 		});
@@ -99,7 +100,11 @@ public class Segelverein extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Bitte zu erst Verbindung zur Datenbank herstellen.");
 					return;
 				} else {
-					new FilterDialog(boot);
+					FilterDialog fd = new FilterDialog(frame);
+					fd.setBounds(100, 100, 792, 300);
+					fd.setVisible(true);
+					whereSELECT = fd.getValue();
+					changeFilter(0);
 				}
 			}
 		});
@@ -206,7 +211,8 @@ public class Segelverein extends JFrame implements ActionListener {
 		
 		try {
 			Statement statement = Connect.conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs = statement.executeQuery("SELECT * FROM boot ORDER BY " + spaltenName + (aufsteigend?" ASC":" DESC"));
+			ResultSet rs = statement.executeQuery("SELECT * FROM boot " + whereSELECT + "ORDER BY " + spaltenName + (aufsteigend?" ASC":" DESC"));
+			System.out.println("SELECT * FROM boot " + whereSELECT + "ORDER BY " + spaltenName + (aufsteigend?" ASC":" DESC"));
 			rs.first();
 			do {
 				Boot boot = new Boot(rs);
@@ -215,7 +221,7 @@ public class Segelverein extends JFrame implements ActionListener {
 			while(rs.next()==true);
 			rs.close();
 		} catch (SQLException e) {
-			
+			//System.out.println(e.getMessage());
 		}
 		table.setModel(new TabelModel(boot));
 	}
