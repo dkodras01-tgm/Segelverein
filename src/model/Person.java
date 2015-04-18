@@ -51,6 +51,11 @@ public class Person implements Updateable {
 				+ geburtsdatum + "]";
 	}
 
+	/**
+	 * Aendert den Datensatz, mit den gesetzten Parametern
+	 * 
+	 * @return true wenn transaktion erfolgreich durchgefuehrt wurde
+	 */
 	@Override
 	public boolean update() throws SQLException {
 		String queue = "UPDATE person SET key='" + key + "', name='" + name
@@ -78,6 +83,11 @@ public class Person implements Updateable {
 		}
 	}
 
+	/**
+	 * Fuegt den Datensatz, mit den gesetzten Parametern ein
+	 * 
+	 * @return true wenn transaktion erfolgreich durchgefuehrt wurde
+	 */
 	@Override
 	public boolean insert() throws SQLException {
 		if (key == 0)
@@ -107,6 +117,11 @@ public class Person implements Updateable {
 		}
 	}
 
+	/**
+	 * Loescht den Datensatz, mit der gesetzten ID
+	 * 
+	 * @return true wenn transaktion erfolgreich durchgefuehrt wurde
+	 */
 	@Override
 	public boolean delete() throws SQLException {
 		String queue = "DELETE FROM person WHERE key=" + key + ";";

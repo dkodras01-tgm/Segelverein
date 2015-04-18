@@ -14,7 +14,7 @@ SELECT p.name FROM person p INNER JOIN (SELECT t.personkey FROM trainer t INNER 
 --4
 --Geben Sie alle Personen geordnet nach Geburtsdatum aus, die entweder Segler oder Trainer sind, jedoch nicht beides und vermerken Sie
 --in einer Spalte, ob es sich um einen Trainer oder einen Segler handelt.
-
+SELECT * FROM person p WHERE p.key NOT IN (SELECT p.key FROM person p INNER JOIN (SELECT t.personkey FROM trainer t INNER JOIN segler s ON t.personkey=s.personkey) a ON p.key=a.personkey ORDER BY p.geburtsdatum);
 
 --5
 --Geben Sie die Regatten (Name und Jahr) mit den wenigsten Wettfahrten an und geben Sie auch die Anzahl aus.
@@ -52,3 +52,4 @@ SELECT p.name FROM person p INNER JOIN (SELECT t.personkey FROM trainer t INNER 
 
 --14
 --Geben Sie die Regatten (Name, Jahr und Land) aus, die über die kürzeste Distanz gehen.
+SELECT name, jahr, land FROM regatta NATURAL JOIN wettfahrt WHERE laenge=(SELECT MIN(laenge) FROM wettfahrt);

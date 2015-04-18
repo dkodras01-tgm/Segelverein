@@ -184,6 +184,12 @@ public class Segelverein extends JFrame implements ActionListener {
 		
 	}
 	
+	/**
+	 * Sortiert die Datensaetze nach der Spalte die gecklickt wurde
+	 * Wenn die selbe Spalte nochmal geklickt wird, wird die Sortierung umgedreht
+	 * 
+	 * @param int, Spalte die geklickt wurde
+	 */
 	public void changeFilter(int column) {
 		this.boot = new DatabaseList<>();
 		String spaltenNameAlt = spaltenName;
@@ -231,10 +237,16 @@ public class Segelverein extends JFrame implements ActionListener {
 		
 	}
 	
+	/**
+	 * Gibt in einem Fenster allgemeine Informationen über das Projekt aus.
+	 */
 	private void showInfo() {
 		JOptionPane.showMessageDialog(this, "Created by Dominik Kodras\n4AHIT TGM");
 	}
 	
+	/**
+	 * Aktualisiert die gesamte Tabelle.
+	 */
 	private void reloadData () {
 		if(connect==null) {
 			JOptionPane.showMessageDialog(null, "Bitte zu erst Verbindung zur Datenbank herstellen.");

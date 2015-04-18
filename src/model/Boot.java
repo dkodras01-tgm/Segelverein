@@ -51,7 +51,12 @@ public class Boot implements Updateable {
 		return "Boot [id=" + id + ", name=" + name + ", personen=" + personen
 				+ ", tiefgang=" + tiefgang + "]";
 	}
-
+	
+	/**
+	 * Aendert den Datensatz, mit den gesetzten Parametern
+	 * 
+	 * @return true wenn transaktion erfolgreich durchgefuehrt wurde
+	 */
 	@Override
 	public boolean update() throws SQLException {
 		String queue = "UPDATE boot SET id='" + id + "', name='" + name
@@ -78,6 +83,11 @@ public class Boot implements Updateable {
 		}
 	}
 
+	/**
+	 * Fuegt den Datensatz, mit den gesetzten Parametern ein
+	 * 
+	 * @return true wenn transaktion erfolgreich durchgefuehrt wurde
+	 */
 	@Override
 	public boolean insert() throws SQLException {
 		if (id == 0)
@@ -109,6 +119,11 @@ public class Boot implements Updateable {
 		}
 	}
 
+	/**
+	 * Loescht den Datensatz, mit der gesetzten ID
+	 * 
+	 * @return true wenn transaktion erfolgreich durchgefuehrt wurde
+	 */
 	@Override
 	public boolean delete() throws SQLException {
 		String queue = "DELETE FROM boot WHERE id=" + id + ";";
